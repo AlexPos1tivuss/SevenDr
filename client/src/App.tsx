@@ -11,6 +11,8 @@ import { AuthPage } from "@/pages/auth";
 import { ShopPage } from "@/pages/shop";
 import { OrdersPage } from "@/pages/orders";
 import { AdminPage } from "@/pages/admin";
+import { AdminShopPage } from "@/pages/admin-shop";
+import { AdminOrdersPage } from "@/pages/admin-orders";
 import { CartModal } from "@/components/cart-modal";
 import { Notification } from "@/components/notification";
 
@@ -71,6 +73,10 @@ function App() {
         return <OrdersPage />;
       case "admin":
         return <AdminPage />;
+      case "admin-shop":
+        return <AdminShopPage />;
+      case "admin-orders":
+        return <AdminOrdersPage />;
       default:
         return <ShopPage onShowNotification={showNotification} />;
     }

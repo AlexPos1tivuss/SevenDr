@@ -1,18 +1,24 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import { Order } from "@shared/schema";
+import { apiRequest } from "@/lib/queryClient";
+import { Order, Chat, Message } from "@shared/schema";
 import { AdminOrdersPage } from "./admin-orders";
-import { Eye } from "lucide-react";
+import { Eye, MessageCircle } from "lucide-react";
 
 export function OrdersPage() {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
 
   // Если администратор, показываем админ-панель
   if (user?.isAdmin) {
@@ -24,9 +30,48 @@ export function OrdersPage() {
     enabled: !!user?.id,
   });
 
+  const { data: chats = [] } = useQuery({
+    queryKey: [`/api/chats/user/${user?.id}`],
+    enabled: !!user?.id,
+  });
+
+  const { data: messages = [] } = useQuery({
+    queryKey: [`/api/chats/${selectedChat?.id}/messages`],
+    enabled: !!selectedChat?.id,
+  });
+
   const handleOrderClick = (order: Order) => {
     setSelectedOrder(order);
     setIsOrderModalOpen(true);
+  };
+
+  const handleChatClick = (order: Order) => {
+    const chat = chats.find((c: Chat) => c.orderId === order.id);
+    if (chat) {
+      setSelectedChat(chat);
+      setIsChatModalOpen(true);
+    }
+  };
+
+  const sendMessageMutation = useMutation({
+    mutationFn: async (content: string) => {
+      return await apiRequest("POST", `/api/chats/${selectedChat?.id}/messages`, {
+        senderId: user?.id,
+        content,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`/api/chats/${selectedChat?.id}/messages`],
+      });
+      setNewMessage("");
+    },
+  });
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() && selectedChat?.id) {
+      sendMessageMutation.mutate(newMessage.trim());
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -103,13 +148,24 @@ export function OrdersPage() {
                     </p>
                   )}
                 </div>
-                <Button
-                  onClick={() => handleOrderClick(order)}
-                  className="bg-secondary hover:bg-secondary/90"
-                >
-                  <Eye className="w-4 h-4 mr-2" />
-                  Подробнее
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => handleOrderClick(order)}
+                    className="bg-secondary hover:bg-secondary/90"
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Подробнее
+                  </Button>
+                  {chats.some((c: Chat) => c.orderId === order.id) && (
+                    <Button
+                      onClick={() => handleChatClick(order)}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Чат
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -159,6 +215,59 @@ export function OrdersPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Chat Modal */}
+      <Dialog open={isChatModalOpen} onOpenChange={setIsChatModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Чат по заказу #{selectedChat?.orderId}</DialogTitle>
+          </DialogHeader>
+          {selectedChat && (
+            <div className="flex flex-col h-96">
+              <div className="flex-1 p-4 overflow-y-auto border border-gray-200 rounded-lg mb-4">
+                {messages.length === 0 ? (
+                  <div className="text-gray-500 text-center">
+                    Нет сообщений
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {messages.map((message: Message) => (
+                      <div
+                        key={message.id}
+                        className={`p-3 rounded-lg max-w-xs ${
+                          message.senderId === user?.id
+                            ? "bg-primary text-white ml-auto"
+                            : "bg-gray-100"
+                        }`}
+                      >
+                        <div className="text-sm">{message.content}</div>
+                        <div className="text-xs opacity-75 mt-1">
+                          {new Date(message.createdAt!).toLocaleTimeString("ru-RU")}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Напишите сообщение..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!newMessage.trim() || sendMessageMutation.isPending}
+                >
+                  Отправить
+                </Button>
               </div>
             </div>
           )}
