@@ -37,7 +37,7 @@ export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
   items: jsonb("items").notNull(),
-  total: decimal("total", { precision: 10, scale: 2 }).notNull(),
+  total: text("total").notNull(),
   deliveryAddress: text("delivery_address").notNull(),
   status: text("status").default("Новый"),
   deliveryDate: text("delivery_date"),

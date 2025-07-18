@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Truck, Shield, Percent } from "lucide-react";
 import logoSvg from "@/assets/logo.svg";
+import truckIcon from "@/assets/truck-icon.svg";
+import shieldIcon from "@/assets/shield-icon.svg";
+import supportIcon from "@/assets/support-icon.svg";
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
@@ -46,7 +49,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="card-hover bg-white p-8 rounded-2xl shadow-lg text-center">
               <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Truck className="text-primary w-8 h-8" />
+                <img src={truckIcon} alt="Быстрая доставка" className="w-8 h-8 text-primary" />
               </div>
               <h4 className="text-xl font-display font-semibold mb-4 text-dark">Быстрая доставка</h4>
               <p className="text-gray-600">
@@ -55,7 +58,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
             <div className="card-hover bg-white p-8 rounded-2xl shadow-lg text-center">
               <div className="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield className="text-secondary w-8 h-8" />
+                <img src={shieldIcon} alt="Гарантия качества" className="w-8 h-8 text-secondary" />
               </div>
               <h4 className="text-xl font-display font-semibold mb-4 text-dark">Гарантия качества</h4>
               <p className="text-gray-600">
@@ -64,11 +67,11 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
             <div className="card-hover bg-white p-8 rounded-2xl shadow-lg text-center">
               <div className="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Percent className="text-accent w-8 h-8" />
+                <img src={supportIcon} alt="Поддержка 24/7" className="w-8 h-8 text-accent" />
               </div>
-              <h4 className="text-xl font-display font-semibold mb-4 text-dark">Выгодные цены</h4>
+              <h4 className="text-xl font-display font-semibold mb-4 text-dark">Поддержка 24/7</h4>
               <p className="text-gray-600">
-                Оптовые цены с прогрессивными скидками. Чем больше заказ, тем выгоднее цена.
+                Наша команда всегда готова помочь и ответить на ваши вопросы круглосуточно.
               </p>
             </div>
           </div>
@@ -100,7 +103,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark text-white py-12">
+      <footer className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>

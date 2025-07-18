@@ -27,6 +27,10 @@ export function useCart() {
       }
       
       localStorage.setItem("cart", JSON.stringify(newCart));
+      // Принудительно обновляем состояние компонента
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('cartUpdated'));
+      }, 0);
       return newCart;
     });
   };

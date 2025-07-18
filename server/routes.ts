@@ -42,12 +42,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { email, password } = req.body;
       
       // Check for admin credentials
-      if (email === "admin@admin.com" && password === "admin") {
+      if (email === "admin@admin.by" && password === "admin") {
         const adminUser = await storage.getUserByEmail(email);
         if (!adminUser) {
           // Create admin user if doesn't exist
           const adminData = {
-            email: "admin@admin.com",
+            email: "admin@admin.by",
             password: "admin",
             companyName: "Семь Драконов",
             unp: "000000000",

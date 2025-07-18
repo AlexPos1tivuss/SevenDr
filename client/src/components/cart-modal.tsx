@@ -28,7 +28,7 @@ export function CartModal({ isOpen, onClose, onOrderPlaced }: CartModalProps) {
       const orderData = {
         userId: user.id,
         items: cart,
-        total: getTotalPrice(),
+        total: getTotalPrice().toFixed(2),
         deliveryAddress: deliveryAddress.trim(),
       };
 
@@ -87,10 +87,10 @@ export function CartModal({ isOpen, onClose, onOrderPlaced }: CartModalProps) {
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="address">Адрес доставки</Label>
+                    <Label htmlFor="address">Укажите адрес</Label>
                     <Input
                       id="address"
-                      placeholder="Улица, дом, квартира"
+                      placeholder="г. Минск, ул. Примерная, д. 1, кв. 5"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
                       className="mt-2"

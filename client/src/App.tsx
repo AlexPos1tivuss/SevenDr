@@ -63,6 +63,8 @@ function App() {
     }
 
     switch (currentPage) {
+      case "landing":
+        return <LandingPage onNavigate={handleNavigate} />;
       case "shop":
         return <ShopPage onShowNotification={showNotification} />;
       case "orders":

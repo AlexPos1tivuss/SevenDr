@@ -3,6 +3,7 @@ import { ShoppingCart, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
 import logoSvg from "@/assets/logo.svg";
+import { useEffect, useReducer } from "react";
 
 interface NavbarProps {
   currentPage: string;
@@ -12,12 +13,28 @@ interface NavbarProps {
 export function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const { user, logout } = useAuth();
   const { getTotalItems } = useCart();
+  
+  // Слушаем обновления корзины
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      // Принудительно обновляем компонент
+      forceUpdate();
+    };
+    
+    window.addEventListener('cartUpdated', handleCartUpdate);
+    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
+  }, []);
+  
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-3">
+          <div 
+            className="flex items-center space-x-3 cursor-pointer" 
+            onClick={() => onNavigate("landing")}
+          >
             <img src={logoSvg} alt="Семь Драконов" className="w-10 h-10" />
             <h1 className="text-xl font-display font-bold text-dark">Семь Драконов</h1>
           </div>
@@ -61,7 +78,10 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                   )}
                 </button>
                 <Button
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    onNavigate("landing");
+                  }}
                   variant="default"
                   className="bg-primary hover:bg-primary/90"
                 >
