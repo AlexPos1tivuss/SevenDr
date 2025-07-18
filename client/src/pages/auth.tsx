@@ -29,7 +29,7 @@ export function AuthPage({ onNavigate }: AuthPageProps) {
       const response = await apiRequest("POST", "/api/auth/login", { email, password });
       const data = await response.json();
       login(data.user);
-      onNavigate("shop");
+      window.location.reload(); // Перезагружаем страницу для обновления навигации
     } catch (error) {
       setError("Неверный email или пароль");
     } finally {
@@ -56,7 +56,7 @@ export function AuthPage({ onNavigate }: AuthPageProps) {
 
       const data = await response.json();
       login(data.user);
-      onNavigate("shop");
+      window.location.reload(); // Перезагружаем страницу для обновления навигации
     } catch (error) {
       setError("Ошибка при регистрации");
     } finally {

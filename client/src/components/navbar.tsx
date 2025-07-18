@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
+import logoSvg from "@/assets/logo.svg";
 
 interface NavbarProps {
   currentPage: string;
@@ -17,9 +18,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-              <span className="text-white text-lg font-bold">🐉</span>
-            </div>
+            <img src={logoSvg} alt="Семь Драконов" className="w-10 h-10" />
             <h1 className="text-xl font-display font-bold text-dark">Семь Драконов</h1>
           </div>
           
