@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/product-card";
 import { ProductModal } from "@/components/product-modal";
 import { FilterSidebar } from "@/components/filter-sidebar";
+import { AdminShopPage } from "./admin-shop";
+import { useAuth } from "@/hooks/useAuth";
 import { Product } from "@shared/schema";
 import { FilterOptions } from "@/lib/types";
 
@@ -14,11 +16,17 @@ interface ShopPageProps {
 }
 
 export function ShopPage({ onShowNotification }: ShopPageProps) {
+  const { user } = useAuth();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({});
+
+  // Если администратор, показываем админ-панель управления товарами
+  if (user?.isAdmin) {
+    return <AdminShopPage />;
+  }
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["/api/products"],

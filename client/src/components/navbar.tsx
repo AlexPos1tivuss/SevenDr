@@ -55,28 +55,32 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                   currentPage === "orders" ? "text-primary" : ""
                 }`}
               >
-                Мои заказы
+                {user.isAdmin ? "Статистика и заказы" : "Мои заказы"}
               </button>
-              <button
-                onClick={() => onNavigate("admin")}
-                className={`text-dark hover:text-primary transition-colors duration-200 font-medium ${
-                  currentPage === "admin" ? "text-primary" : ""
-                }`}
-              >
-                Администратор
-              </button>
-              <div className="flex items-center space-x-3">
+              {user.isAdmin && (
                 <button
-                  onClick={() => onNavigate("cart")}
-                  className="relative"
+                  onClick={() => onNavigate("admin")}
+                  className={`text-dark hover:text-primary transition-colors duration-200 font-medium ${
+                    currentPage === "admin" ? "text-primary" : ""
+                  }`}
                 >
-                  <ShoppingCart className="w-5 h-5 text-dark" />
-                  {getTotalItems() > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                      {getTotalItems()}
-                    </span>
-                  )}
+                  Чат
                 </button>
+              )}
+              <div className="flex items-center space-x-3">
+                {!user.isAdmin && (
+                  <button
+                    onClick={() => onNavigate("cart")}
+                    className="relative"
+                  >
+                    <ShoppingCart className="w-5 h-5 text-dark" />
+                    {getTotalItems() > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {getTotalItems()}
+                      </span>
+                    )}
+                  </button>
+                )}
                 <Button
                   onClick={() => {
                     logout();

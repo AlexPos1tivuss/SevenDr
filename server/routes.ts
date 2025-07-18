@@ -98,6 +98,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin product management
+  app.post("/api/products", upload.single("image"), async (req, res) => {
+    try {
+      const productData = {
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        ageGroup: req.body.ageGroup,
+        material: req.body.material,
+        country: req.body.country,
+        price5: req.body.price5,
+        price20: req.body.price20,
+        price50: req.body.price50,
+        imageUrl: req.file ? `/uploads/${req.file.filename}` : req.body.imageUrl,
+        inStock: req.body.inStock === 'true'
+      };
+
+      const product = await storage.createProduct(productData);
+      res.json(product);
+    } catch (error) {
+      console.error("Create product error:", error);
+      res.status(400).json({ message: "Ошибка создания товара" });
+    }
+  });
+
+  app.put("/api/products/:id", upload.single("image"), async (req, res) => {
+    try {
+      const productData = {
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        ageGroup: req.body.ageGroup,
+        material: req.body.material,
+        country: req.body.country,
+        price5: req.body.price5,
+        price20: req.body.price20,
+        price50: req.body.price50,
+        imageUrl: req.file ? `/uploads/${req.file.filename}` : req.body.imageUrl,
+        inStock: req.body.inStock === 'true'
+      };
+
+      const product = await storage.updateProduct(parseInt(req.params.id), productData);
+      res.json(product);
+    } catch (error) {
+      console.error("Update product error:", error);
+      res.status(400).json({ message: "Ошибка обновления товара" });
+    }
+  });
+
+  app.delete("/api/products/:id", async (req, res) => {
+    try {
+      await storage.deleteProduct(parseInt(req.params.id));
+      res.json({ message: "Товар удален" });
+    } catch (error) {
+      console.error("Delete product error:", error);
+      res.status(400).json({ message: "Ошибка удаления товара" });
+    }
+  });
+
   // Order routes
   app.post("/api/orders", async (req, res) => {
     try {
@@ -134,6 +193,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Get all orders error:", error);
       res.status(500).json({ message: "Ошибка получения заказов" });
+    }
+  });
+
+  // Admin statistics
+  app.get("/api/admin/stats", async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      const users = await storage.getAllUsers();
+      
+      const stats = {
+        totalUsers: users.length,
+        totalOrders: orders.length,
+        totalRevenue: orders.reduce((sum, order) => sum + parseFloat(order.total || '0'), 0),
+        ordersByStatus: orders.reduce((acc: any, order) => {
+          acc[order.status] = (acc[order.status] || 0) + 1;
+          return acc;
+        }, {})
+      };
+      
+      res.json(stats);
+    } catch (error) {
+      console.error("Get admin stats error:", error);
+      res.status(500).json({ message: "Ошибка получения статистики" });
     }
   });
 
