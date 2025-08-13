@@ -35,7 +35,17 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
             className="flex items-center space-x-3 cursor-pointer" 
             onClick={() => onNavigate("landing")}
           >
-            <img src={logoSvg} alt="Семь Драконов" className="w-10 h-10" />
+            <div className="w-10 h-10 text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" fill="currentColor">
+                <path d="M20 50c-5 0-8 3-8 7s3 7 8 7c3 0 5-1 7-3l2 2c8-3 15-8 20-15 2-3 3-6 3-9 0-8-6-14-14-14-4 0-8 2-10 5-1-2-3-3-5-3-3 0-5 2-5 5 0 2 1 3 2 4z"/>
+                <path d="M45 35c2-4 6-7 11-7 6 0 11 4 11 10 0 2-1 4-2 6-4 6-10 10-17 12l-3-2c-1 1-2 2-4 2-4 0-7-3-7-7s3-7 7-7c2 0 3 1 4 2z"/>
+                <path d="M75 25c8 0 15 6 15 14 0 3-1 6-3 8-5 8-13 13-22 16l-5-3c-2 2-5 3-8 3-6 0-11-4-11-10s5-10 11-10c3 0 6 1 8 3l5-3c4-2 7-5 9-8 1-2 1-4 1-6 0-2-2-4-4-4z"/>
+                <path d="M95 40c0-3 2-5 5-5s5 2 5 5-2 5-5 5-5-2-5-5z"/>
+                <path d="M30 25c3 0 5 2 5 5s-2 5-5 5-5-2-5-5 2-5 5-5z"/>
+                <path d="M15 35c2 0 4 1 4 3s-2 3-4 3-4-1-4-3 2-3 4-3z"/>
+                <path d="M85 15c4 0 7 3 7 7s-3 7-7 7-7-3-7-7 3-7 7-7z"/>
+              </svg>
+            </div>
             <h1 className="text-xl font-display font-bold text-dark">Семь Драконов</h1>
           </div>
           

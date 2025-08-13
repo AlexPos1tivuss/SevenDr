@@ -23,14 +23,14 @@ export function ShopPage({ onShowNotification }: ShopPageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({});
 
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["/api/products"],
+  });
+
   // Если администратор, показываем админ-панель управления товарами
   if (user?.isAdmin) {
     return <AdminShopPage />;
   }
-
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ["/api/products"],
-  });
 
   const filteredProducts = products.filter((product: Product) => {
     // Search filter

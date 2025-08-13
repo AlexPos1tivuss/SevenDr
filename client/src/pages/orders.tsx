@@ -20,11 +20,6 @@ export function OrdersPage() {
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const [newMessage, setNewMessage] = useState("");
 
-  // Если администратор, показываем админ-панель
-  if (user?.isAdmin) {
-    return <AdminOrdersPage />;
-  }
-
   const { data: orders = [], isLoading } = useQuery({
     queryKey: [`/api/orders/user/${user?.id}`],
     enabled: !!user?.id,
@@ -39,6 +34,11 @@ export function OrdersPage() {
     queryKey: [`/api/chats/${selectedChat?.id}/messages`],
     enabled: !!selectedChat?.id,
   });
+
+  // Если администратор, показываем админ-панель
+  if (user?.isAdmin) {
+    return <AdminOrdersPage />;
+  }
 
   const handleOrderClick = (order: Order) => {
     setSelectedOrder(order);
@@ -209,8 +209,8 @@ export function OrdersPage() {
                         <p className="text-sm text-gray-600">Количество: {item.quantity} шт</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">{(parseFloat(item.price) * item.quantity).toFixed(2)} BYN</p>
-                        <p className="text-sm text-gray-600">{item.price} BYN за шт</p>
+                        <p className="font-semibold">{(typeof item.price === 'object' ? parseFloat(item.price.selectedPrice || Object.values(item.price)[0]) : parseFloat(item.price) * item.quantity).toFixed(2)} BYN</p>
+                        <p className="text-sm text-gray-600">{typeof item.price === 'object' ? `${parseFloat(item.price.selectedPrice || Object.values(item.price)[0])} BYN за шт` : `${item.price} BYN за шт`}</p>
                       </div>
                     </div>
                   ))}

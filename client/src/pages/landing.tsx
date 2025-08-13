@@ -102,6 +102,162 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h3 className="text-3xl font-display font-bold text-center text-dark mb-12">
+            Отзывы наших клиентов
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold">АМ</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-dark">Анна Михайлова</h4>
+                  <p className="text-sm text-gray-500">Детский сад "Солнышко"</p>
+                </div>
+              </div>
+              <div className="text-yellow-400 mb-2">★★★★★</div>
+              <p className="text-gray-600 italic">
+                "Сотрудничаем уже 3 года. Всегда качественные игрушки, быстрая доставка и отличные цены для оптовых закупок."
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold">ВС</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-dark">Владимир Соколов</h4>
+                  <p className="text-sm text-gray-500">Магазин "Детский мир"</p>
+                </div>
+              </div>
+              <div className="text-yellow-400 mb-2">★★★★★</div>
+              <p className="text-gray-600 italic">
+                "Надежный партнер! Широкий ассортимент, конкурентные цены и профессиональный подход к каждому заказу."
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold">ЕК</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-dark">Елена Кузнецова</h4>
+                  <p className="text-sm text-gray-500">Развивающий центр "Умка"</p>
+                </div>
+              </div>
+              <div className="text-yellow-400 mb-2">★★★★★</div>
+              <p className="text-gray-600 italic">
+                "Особенно ценим развивающие игрушки от проверенных производителей. Дети в восторге, родители довольны!"
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Company Section */}
+      <section className="py-20 bg-primary text-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-3xl font-display font-bold mb-6">
+                О компании "Семь Драконов"
+              </h3>
+              <p className="text-lg mb-6 opacity-90">
+                Мы являемся ведущим оптовым поставщиком детских игрушек в Беларуси с 2009 года. 
+                Наша миссия — обеспечить детские учреждения и магазины качественными, безопасными 
+                и развивающими игрушками по доступным ценам.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-white rounded-full mr-3"></span>
+                  Прямые поставки от производителей
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-white rounded-full mr-3"></span>
+                  Все товары сертифицированы
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-white rounded-full mr-3"></span>
+                  Гибкая система скидок
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-white rounded-full mr-3"></span>
+                  Собственная служба доставки
+                </li>
+              </ul>
+            </div>
+            <div className="text-center">
+              <div className="bg-white bg-opacity-10 rounded-2xl p-8">
+                <h4 className="text-2xl font-bold mb-4">Наши преимущества</h4>
+                <div className="grid grid-cols-2 gap-6 text-center">
+                  <div>
+                    <div className="text-3xl font-bold mb-2">15+</div>
+                    <div className="text-sm opacity-80">лет опыта</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold mb-2">500+</div>
+                    <div className="text-sm opacity-80">довольных клиентов</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold mb-2">2000+</div>
+                    <div className="text-sm opacity-80">товаров в каталоге</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold mb-2">24/7</div>
+                    <div className="text-sm opacity-80">поддержка клиентов</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-display font-bold text-dark mb-4">
+              Свяжитесь с нами
+            </h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Готовы начать сотрудничество? Свяжитесь с нами удобным способом, 
+              и наши менеджеры помогут подобрать оптимальное решение для вашего бизнеса.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center p-6 bg-gray-50 rounded-xl">
+              <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-primary text-2xl">📍</span>
+              </div>
+              <h4 className="font-semibold mb-2 text-dark">Адрес</h4>
+              <p className="text-gray-600">г. Минск, ул. Промышленная, 15</p>
+              <p className="text-gray-600">офис 301</p>
+            </div>
+            <div className="text-center p-6 bg-gray-50 rounded-xl">
+              <div className="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-secondary text-2xl">📞</span>
+              </div>
+              <h4 className="font-semibold mb-2 text-dark">Телефон</h4>
+              <p className="text-gray-600">+375 (17) 123-45-67</p>
+              <p className="text-gray-600">+375 (29) 123-45-67</p>
+            </div>
+            <div className="text-center p-6 bg-gray-50 rounded-xl">
+              <div className="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-accent text-2xl">✉️</span>
+              </div>
+              <h4 className="font-semibold mb-2 text-dark">Email</h4>
+              <p className="text-gray-600">info@seven-dragons.by</p>
+              <p className="text-gray-600">sales@seven-dragons.by</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-4">
