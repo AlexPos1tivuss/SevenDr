@@ -36,6 +36,7 @@ export interface IStorage {
   createOrder(order: InsertOrder): Promise<Order>;
   getUserOrders(userId: number): Promise<Order[]>;
   getAllOrders(): Promise<Order[]>;
+  getOrdersByUserId(userId: number): Promise<Order[]>;
   updateOrderStatus(orderId: number, status: string, deliveryDate?: string): Promise<Order>;
   
   // Chat operations
@@ -109,6 +110,14 @@ export class DatabaseStorage implements IStorage {
 
   async getAllOrders(): Promise<Order[]> {
     return await db.select().from(orders).orderBy(desc(orders.createdAt));
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await db.select().from(users).orderBy(desc(users.createdAt));
+  }
+
+  async getOrdersByUserId(userId: number): Promise<Order[]> {
+    return await db.select().from(orders).where(eq(orders.userId, userId)).orderBy(desc(orders.createdAt));
   }
 
   async updateOrderStatus(orderId: number, status: string, deliveryDate?: string): Promise<Order> {

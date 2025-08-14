@@ -21,6 +21,8 @@ export function useAuth() {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    // Очищаем все данные и перезагружаем страницу для полного сброса состояния
+    window.location.reload();
   };
 
   return {

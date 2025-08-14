@@ -28,11 +28,11 @@ const statusColors: Record<string, string> = {
 export function AdminOrdersPage() {
   const queryClient = useQueryClient();
 
-  const { data: stats } = useQuery({
+  const { data: stats = {} } = useQuery({
     queryKey: ["/api/admin/stats"],
   });
 
-  const { data: orders = [] } = useQuery({
+  const { data: orders = [] } = useQuery<Order[]>({
     queryKey: ["/api/orders"],
   });
 
@@ -80,7 +80,7 @@ export function AdminOrdersPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalUsers || 0}</div>
+            <div className="text-2xl font-bold">{(stats as any)?.totalUsers || 0}</div>
           </CardContent>
         </Card>
         
@@ -90,7 +90,7 @@ export function AdminOrdersPage() {
             <ShoppingBag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalOrders || 0}</div>
+            <div className="text-2xl font-bold">{(stats as any)?.totalOrders || 0}</div>
           </CardContent>
         </Card>
         
@@ -100,7 +100,7 @@ export function AdminOrdersPage() {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalRevenue?.toFixed(2) || "0.00"} BYN</div>
+            <div className="text-2xl font-bold">{((stats as any)?.totalRevenue || 0).toFixed(2)} BYN</div>
           </CardContent>
         </Card>
         
@@ -118,14 +118,14 @@ export function AdminOrdersPage() {
       </div>
 
       {/* Orders Status Overview */}
-      {stats?.ordersByStatus && (
+      {(stats as any)?.ordersByStatus && (
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Заказы по статусам</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {Object.entries(stats.ordersByStatus).map(([status, count]) => (
+              {Object.entries((stats as any).ordersByStatus).map(([status, count]) => (
                 <div key={status} className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-lg font-semibold">{count as number}</div>
                   <div className="text-sm text-gray-600">{status}</div>
@@ -158,7 +158,7 @@ export function AdminOrdersPage() {
               {orders.map((order: Order) => (
                 <TableRow key={order.id}>
                   <TableCell className="font-medium">#{order.id}</TableCell>
-                  <TableCell>{formatDate(order.createdAt)}</TableCell>
+                  <TableCell>{formatDate(order.createdAt?.toString() || "")}</TableCell>
                   <TableCell>
                     <div className="text-sm">
                       <div>ID: {order.userId}</div>
@@ -174,10 +174,10 @@ export function AdminOrdersPage() {
                     </div>
                   </TableCell>
                   <TableCell className="font-medium">{order.total} BYN</TableCell>
-                  <TableCell>{getStatusBadge(order.status)}</TableCell>
+                  <TableCell>{getStatusBadge(order.status || "")}</TableCell>
                   <TableCell>
                     <Select
-                      value={order.status}
+                      value={order.status || ""}
                       onValueChange={(newStatus) => handleStatusChange(order.id, newStatus)}
                     >
                       <SelectTrigger className="w-40">

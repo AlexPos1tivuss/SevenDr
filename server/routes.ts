@@ -219,6 +219,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all users (admin only)
+  app.get("/api/users", async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+
+  // Get user orders by user ID (admin only)
+  app.get("/api/users/:userId/orders", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const orders = await storage.getOrdersByUserId(userId);
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching user orders:", error);
+      res.status(500).json({ message: "Failed to fetch user orders" });
+    }
+  });
+
   app.put("/api/orders/:id/status", async (req, res) => {
     try {
       const { status, deliveryDate } = req.body;
@@ -226,7 +249,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(order);
     } catch (error) {
       console.error("Update order status error:", error);
-      res.status(500).json({ message: "Ошибка обновления статуса заказа" });
+      res.status(400).json({ message: "Ошибка обновления статуса заказа" });
     }
   });
 

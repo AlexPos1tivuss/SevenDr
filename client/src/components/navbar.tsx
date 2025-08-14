@@ -74,7 +74,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                     currentPage === "admin" ? "text-primary" : ""
                   }`}
                 >
-                  Чат
+                  Админ-панель
                 </button>
               )}
               <div className="flex items-center space-x-3">
