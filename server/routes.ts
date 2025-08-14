@@ -74,6 +74,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Category routes
+  app.get("/api/categories", async (req, res) => {
+    try {
+      const categories = await storage.getCategories();
+      res.json(categories);
+    } catch (error) {
+      console.error("Get categories error:", error);
+      res.status(500).json({ message: "Ошибка получения категорий" });
+    }
+  });
+
   // Product routes
   app.get("/api/products", async (req, res) => {
     try {

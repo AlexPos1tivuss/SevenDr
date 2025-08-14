@@ -10,10 +10,10 @@ export function AdminPage() {
       <h2 className="text-3xl font-display font-bold text-dark mb-8">Панель администратора</h2>
       
       <Tabs defaultValue="orders" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="orders">Статистика и заказы</TabsTrigger>
           <TabsTrigger value="users">Управление пользователями</TabsTrigger>
-          <TabsTrigger value="shop">Управление товарами</TabsTrigger>
+          
         </TabsList>
         
         <TabsContent value="orders" className="mt-6">

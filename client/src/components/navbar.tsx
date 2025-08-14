@@ -59,14 +59,16 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
               >
                 Магазин
               </button>
-              <button
-                onClick={() => onNavigate("orders")}
-                className={`text-dark hover:text-primary transition-colors duration-200 font-medium ${
-                  currentPage === "orders" ? "text-primary" : ""
-                }`}
-              >
-                {user.isAdmin ? "Статистика и заказы" : "Мои заказы"}
-              </button>
+              {!user.isAdmin && (
+                <button
+                  onClick={() => onNavigate("orders")}
+                  className={`text-dark hover:text-primary transition-colors duration-200 font-medium ${
+                    currentPage === "orders" ? "text-primary" : ""
+                  }`}
+                >
+                  Мои заказы
+                </button>
+              )}
               {user.isAdmin && (
                 <button
                   onClick={() => onNavigate("admin")}

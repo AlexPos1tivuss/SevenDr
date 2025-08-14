@@ -16,7 +16,7 @@ runButton = "Project"
 [[workflows.workflow]]
 name = "Project"
 mode = "parallel"
-author = "alex"
+author = "agent"
 # agent
 [[workflows.workflow.tasks]]
 task = "workflow.run"
@@ -24,7 +24,7 @@ args = "Start application"
 
 [[workflows.workflow]]
 name = "Start application"
-author = "alex" 
+author = "agent" 
 # agent
 
 [[workflows.workflow.tasks]]

@@ -4,6 +4,7 @@ import {
   orders, 
   chats, 
   messages,
+  categories,
   type User, 
   type InsertUser, 
   type Product, 
@@ -13,7 +14,9 @@ import {
   type Chat,
   type InsertChat,
   type Message,
-  type InsertMessage
+  type InsertMessage,
+  type Category,
+  type InsertCategory
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -24,6 +27,9 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   getAllUsers(): Promise<User[]>;
+  
+  // Category operations
+  getCategories(): Promise<Category[]>;
   
   // Product operations
   getAllProducts(): Promise<Product[]>;
@@ -68,7 +74,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await db.select().from(users);
+    return await db.select().from(users).orderBy(desc(users.createdAt));
   }
 
   // Product operations
@@ -112,8 +118,9 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(orders).orderBy(desc(orders.createdAt));
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return await db.select().from(users).orderBy(desc(users.createdAt));
+  // Category operations
+  async getCategories(): Promise<Category[]> {
+    return await db.select().from(categories);
   }
 
   async getOrdersByUserId(userId: number): Promise<Order[]> {
