@@ -278,7 +278,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/chats", async (req, res) => {
     try {
       const chats = await storage.getAllChats();
-      res.json(chats);
+      // Добавляем информацию о пользователе для каждого чата
+      const chatsWithUserInfo = await Promise.all(
+        chats.map(async (chat: any) => {
+          const user = await storage.getUser(chat.userId);
+          return {
+            ...chat,
+            userEmail: user?.email,
+            userName: user?.name
+          };
+        })
+      );
+      res.json(chatsWithUserInfo);
     } catch (error) {
       console.error("Get all chats error:", error);
       res.status(500).json({ message: "Ошибка получения чатов" });
@@ -288,7 +299,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/chats/:id/messages", async (req, res) => {
     try {
       const messages = await storage.getChatMessages(parseInt(req.params.id));
-      res.json(messages);
+      // Добавляем информацию об отправителе для каждого сообщения
+      const messagesWithSenderInfo = await Promise.all(
+        messages.map(async (message: any) => {
+          const sender = await storage.getUser(message.senderId);
+          return {
+            ...message,
+            senderEmail: sender?.email,
+            senderName: sender?.name
+          };
+        })
+      );
+      res.json(messagesWithSenderInfo);
     } catch (error) {
       console.error("Get chat messages error:", error);
       res.status(500).json({ message: "Ошибка получения сообщений" });
