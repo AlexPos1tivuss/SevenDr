@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FilterOptions } from "@/lib/types";
 import { X } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface FilterSidebarProps {
   filters: FilterOptions;
@@ -11,6 +12,10 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters, onFilterChange, isVisible, onClose }: FilterSidebarProps) {
+  const { data: categories = [] } = useQuery({
+    queryKey: ["/api/categories"],
+  });
+
   const handleFilterChange = (key: keyof FilterOptions, value: string, checked: boolean) => {
     const currentValues = filters[key] || [];
     const newValues = checked
@@ -22,6 +27,19 @@ export function FilterSidebar({ filters, onFilterChange, isVisible, onClose }: F
       [key]: newValues,
     });
   };
+
+  // Объединяем старые категории с новыми из базы данных
+  const allCategories = [
+    "Конструкторы", 
+    "Куклы", 
+    "Машинки", 
+    "Пазлы", 
+    "Мягкие игрушки",
+    ...categories.map((cat: any) => cat.name)
+  ];
+
+  // Удаляем дубликаты
+  const uniqueCategories = [...new Set(allCategories)];
 
   return (
     <div className={`fixed md:relative left-0 top-0 w-80 md:w-64 bg-white h-full md:h-auto z-40 p-6 shadow-lg md:shadow-none overflow-y-auto transition-transform duration-300 ${
@@ -38,7 +56,7 @@ export function FilterSidebar({ filters, onFilterChange, isVisible, onClose }: F
         <div>
           <Label className="text-base font-semibold text-dark mb-3 block">Категория</Label>
           <div className="space-y-2">
-            {["Конструкторы", "Куклы", "Машинки", "Пазлы", "Мягкие игрушки"].map((category) => (
+            {uniqueCategories.map((category) => (
               <div key={category} className="flex items-center space-x-2">
                 <Checkbox
                   id={`category-${category}`}
@@ -58,7 +76,7 @@ export function FilterSidebar({ filters, onFilterChange, isVisible, onClose }: F
         <div>
           <Label className="text-base font-semibold text-dark mb-3 block">Возраст</Label>
           <div className="space-y-2">
-            {["0-2 года", "3-5 лет", "6-8 лет", "9-12 лет", "12+ лет"].map((age) => (
+            {["0-2 года", "0-3 года", "0-5 лет", "0-12 месяцев", "3-5 лет", "6-8 лет", "9-12 лет", "12+ лет"].map((age) => (
               <div key={age} className="flex items-center space-x-2">
                 <Checkbox
                   id={`age-${age}`}
@@ -98,7 +116,7 @@ export function FilterSidebar({ filters, onFilterChange, isVisible, onClose }: F
         <div>
           <Label className="text-base font-semibold text-dark mb-3 block">Материал</Label>
           <div className="space-y-2">
-            {["Пластик", "Дерево", "Текстиль", "Металл", "Резина"].map((material) => (
+            {["Пластик", "Дерево", "Текстиль", "Металл", "Резина", "Силикон", "Алюминий", "Полипропилен", "Массив березы"].map((material) => (
               <div key={material} className="flex items-center space-x-2">
                 <Checkbox
                   id={`material-${material}`}

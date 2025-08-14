@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, Package } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/product-card";
 import { ProductModal } from "@/components/product-modal";
@@ -10,7 +10,6 @@ import { AdminShopPage } from "./admin-shop";
 import { useAuth } from "@/hooks/useAuth";
 import { Product } from "@shared/schema";
 import { FilterOptions } from "@/lib/types";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ShopPageProps {
   onShowNotification: (message: string) => void;
@@ -23,14 +22,9 @@ export function ShopPage({ onShowNotification }: ShopPageProps) {
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({});
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["/api/products"],
-  });
-
-  const { data: categories = [] } = useQuery({
-    queryKey: ["/api/categories"],
   });
 
   // Если администратор, показываем админ-панель управления товарами
@@ -41,11 +35,6 @@ export function ShopPage({ onShowNotification }: ShopPageProps) {
   const filteredProducts = products.filter((product: Product) => {
     // Search filter
     if (searchTerm && !product.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
-    }
-
-    // Selected category filter
-    if (selectedCategory && product.category !== selectedCategory) {
       return false;
     }
 
@@ -117,28 +106,6 @@ export function ShopPage({ onShowNotification }: ShopPageProps) {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h2 className="text-3xl font-display font-bold text-dark mb-4">Каталог игрушек</h2>
-        
-        {/* Category Buttons */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          <Button
-            variant={selectedCategory === null ? "default" : "outline"}
-            onClick={() => setSelectedCategory(null)}
-            className="flex items-center gap-2"
-          >
-            <Package className="h-4 w-4" />
-            Все товары
-          </Button>
-          {categories.map((category: any) => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.name ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category.name)}
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
-
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 relative">
             <Input
