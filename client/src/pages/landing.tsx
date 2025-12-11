@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Truck, Shield, Percent } from "lucide-react";
 import logoSvg from "@/assets/logo.svg";
 import truckIcon from "@/assets/truck-icon.svg";
 import shieldIcon from "@/assets/shield-icon.svg";
@@ -28,12 +27,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-200 animate-bounce-in"
               >
                 Начать работу
-              </Button>
-              <Button
-                variant="outline"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors duration-200 animate-bounce-in"
-              >
-                Узнать больше
               </Button>
             </div>
           </div>
