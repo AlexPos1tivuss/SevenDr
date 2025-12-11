@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
+import { CartProvider } from "@/hooks/useCartContext";
 import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { LandingPage } from "@/pages/landing";
@@ -84,28 +85,30 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="min-h-screen bg-light">
-          <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
-          <main>{renderPage()}</main>
-          
-          {user && (
-            <CartModal
-              isOpen={isCartOpen}
-              onClose={() => setIsCartOpen(false)}
-              onOrderPlaced={showNotification}
+      <CartProvider>
+        <TooltipProvider>
+          <div className="min-h-screen bg-light">
+            <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+            <main>{renderPage()}</main>
+            
+            {user && (
+              <CartModal
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                onOrderPlaced={showNotification}
+              />
+            )}
+            
+            <Notification
+              message={notification.message}
+              type={notification.type}
+              isVisible={notification.isVisible}
+              onClose={hideNotification}
             />
-          )}
-          
-          <Notification
-            message={notification.message}
-            type={notification.type}
-            isVisible={notification.isVisible}
-            onClose={hideNotification}
-          />
-        </div>
-        <Toaster />
-      </TooltipProvider>
+          </div>
+          <Toaster />
+        </TooltipProvider>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

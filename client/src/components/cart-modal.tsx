@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
-import { useCart } from "@/hooks/useCart";
+import { useCartContext } from "@/hooks/useCartContext";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
 import { useState } from "react";
@@ -15,7 +15,7 @@ interface CartModalProps {
 }
 
 export function CartModal({ isOpen, onClose, onOrderPlaced }: CartModalProps) {
-  const { cart, removeFromCart, clearCart, getItemPrice, getTotalPrice } = useCart();
+  const { cart, removeFromCart, clearCart, getItemPrice, getTotalPrice } = useCartContext();
   const { user } = useAuth();
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);

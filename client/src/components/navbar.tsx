@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useCart } from "@/hooks/useCart";
+import { useCartContext } from "@/hooks/useCartContext";
 import logoSvg from "@/assets/logo.svg";
-import { useEffect, useReducer } from "react";
 
 interface NavbarProps {
   currentPage: string;
@@ -12,20 +11,7 @@ interface NavbarProps {
 
 export function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const { user, logout } = useAuth();
-  const { getTotalItems } = useCart();
-  
-  // Слушаем обновления корзины
-  useEffect(() => {
-    const handleCartUpdate = () => {
-      // Принудительно обновляем компонент
-      forceUpdate();
-    };
-    
-    window.addEventListener('cartUpdated', handleCartUpdate);
-    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
-  }, []);
-  
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const { getTotalItems } = useCartContext();
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">

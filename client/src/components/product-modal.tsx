@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Product } from "@shared/schema";
 import { useState } from "react";
-import { useCart } from "@/hooks/useCart";
+import { useCartContext } from "@/hooks/useCartContext";
 
 interface ProductModalProps {
   product: Product | null;
@@ -15,7 +15,7 @@ interface ProductModalProps {
 
 export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductModalProps) {
   const [quantity, setQuantity] = useState(5);
-  const { addToCart } = useCart();
+  const { addToCart } = useCartContext();
 
   if (!product) return null;
 
