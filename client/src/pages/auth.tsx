@@ -51,14 +51,15 @@ export function AuthPage({ onNavigate }: AuthPageProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Ошибка регистрации");
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || "Ошибка регистрации");
       }
 
       const data = await response.json();
       login(data.user);
       window.location.reload(); // Перезагружаем страницу для обновления навигации
-    } catch (error) {
-      setError("Ошибка при регистрации");
+    } catch (error: any) {
+      setError(error?.message || "Ошибка при регистрации");
     } finally {
       setIsLoading(false);
     }

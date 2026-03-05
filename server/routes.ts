@@ -7,7 +7,14 @@ import multer from "multer";
 import path from "path";
 import { z } from "zod";
 
-const upload = multer({ dest: "uploads/" });
+const uploadStorage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (_req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage: uploadStorage });
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes

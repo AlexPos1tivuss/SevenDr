@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState, useRef } from "react"; 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { apiRequest } from "@/lib/queryClient";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Upload, Image } from "lucide-react";
 import { Product } from "@shared/schema";
 
 export function AdminShopPage() {
@@ -16,6 +16,10 @@ export function AdminShopPage() {
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [productForm, setProductForm] = useState({
     name: '',
@@ -89,6 +93,8 @@ export function AdminShopPage() {
       imageUrl: '',
       inStock: true
     });
+    setImageFile(null);
+    setImagePreview("");
   };
 
   const handleEdit = (product: Product) => {
@@ -106,14 +112,34 @@ export function AdminShopPage() {
       imageUrl: product.imageUrl,
       inStock: product.inStock
     });
+    setImageFile(null);
+    setImagePreview(product.imageUrl || "");
     setIsEditModalOpen(true);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (isEdit: boolean) => {
     const formData = new FormData();
     Object.entries(productForm).forEach(([key, value]) => {
-      formData.append(key, value.toString());
+      if (key !== 'imageUrl') {
+        formData.append(key, value.toString());
+      }
     });
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    } else if (productForm.imageUrl) {
+      formData.append("imageUrl", productForm.imageUrl);
+    }
 
     if (isEdit && editProduct) {
       updateMutation.mutate({ id: editProduct.id, formData });
@@ -213,12 +239,30 @@ export function AdminShopPage() {
       </div>
 
       <div>
-        <Label htmlFor="imageUrl">URL изображения</Label>
-        <Input
-          id="imageUrl"
-          value={productForm.imageUrl}
-          onChange={(e) => setProductForm({ ...productForm, imageUrl: e.target.value })}
-        />
+        <Label>Изображение товара</Label>
+        <div className="mt-1 space-y-3">
+          {imagePreview && (
+            <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+              <img src={imagePreview} alt="Превью" className="w-full h-full object-cover" />
+            </div>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="w-4 h-4 mr-2" />
+            {imagePreview ? "Заменить фото" : "Загрузить фото"}
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center space-x-2">
