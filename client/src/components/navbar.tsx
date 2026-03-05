@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartContext } from "@/hooks/useCartContext";
-import logoSvg from "@/assets/logo.svg";
+import logoPng from "@/assets/logo-dragon.png";
 
 interface NavbarProps {
   currentPage: string;
@@ -21,7 +21,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
             className="flex items-center space-x-3 cursor-pointer" 
             onClick={() => onNavigate("landing")}
           >
-            <img src={logoSvg} alt="Семь Драконов" className="w-10 h-10" />
+            <img src={logoPng} alt="Семь Драконов" className="w-10 h-10" />
             <h1 className="text-xl font-display font-bold text-dark">Семь Драконов</h1>
           </div>
           

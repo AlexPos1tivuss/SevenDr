@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import logoSvg from "@/assets/logo.svg";
+import logoPng from "@/assets/logo-dragon.png";
 import { Truck, Shield, Headphones, Package, Users, Award, Clock } from "lucide-react";
 
 interface LandingPageProps {
@@ -13,7 +13,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <div className="flex justify-center mb-6">
-              <img src={logoSvg} alt="Семь Драконов" className="w-20 h-20" />
+              <img src={logoPng} alt="Семь Драконов" className="w-20 h-20" />
             </div>
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-tight">
               Детские игрушки оптом
@@ -121,7 +121,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-3">
-              <img src={logoSvg} alt="Семь Драконов" className="w-8 h-8" />
+              <img src={logoPng} alt="Семь Драконов" className="w-8 h-8" />
               <span className="font-display font-bold">Семь Драконов</span>
             </div>
             <div className="text-sm text-gray-400 text-center">

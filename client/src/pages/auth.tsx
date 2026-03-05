@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
+import logoPng from "@/assets/logo-dragon.png";
 
 interface AuthPageProps {
   onNavigate: (page: string) => void;
@@ -71,6 +72,9 @@ export function AuthPage({ onNavigate }: AuthPageProps) {
         <div className="md:flex">
           <div className="md:w-1/2 p-8">
             <div className="text-center mb-8">
+              <div className="flex justify-center mb-4">
+                <img src={logoPng} alt="Семь Драконов" className="w-16 h-16" />
+              </div>
               <h2 className="text-3xl font-display font-bold text-dark mb-2">Добро пожаловать!</h2>
               <p className="text-gray-600">Войдите в личный кабинет или зарегистрируйтесь</p>
             </div>
