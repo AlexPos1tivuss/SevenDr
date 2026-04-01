@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Trash2 } from "lucide-react";
 import { useCartContext } from "@/hooks/useCartContext";
 import { useAuth } from "@/hooks/useAuth";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useState } from "react";
 
 interface CartModalProps {
@@ -34,6 +34,7 @@ export function CartModal({ isOpen, onClose, onOrderPlaced }: CartModalProps) {
 
       await apiRequest("POST", "/api/orders", orderData);
       clearCart();
+      queryClient.invalidateQueries({ queryKey: [`/api/orders/user/${user.id}`] });
       onOrderPlaced("Заказ успешно отправлен!");
       onClose();
     } catch (error) {
