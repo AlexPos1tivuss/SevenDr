@@ -40,9 +40,14 @@ export function AdminOrdersPage() {
     mutationFn: async ({ orderId, status }: { orderId: number, status: string }) => {
       return await apiRequest("PUT", `/api/orders/${orderId}/status`, { status });
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["/api/orders"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      const updatedOrder = orders.find((o) => o.id === variables.orderId);
+      if (updatedOrder) {
+        queryClient.invalidateQueries({ queryKey: [`/api/users/${updatedOrder.userId}/orders`] });
+        queryClient.invalidateQueries({ queryKey: [`/api/orders/user/${updatedOrder.userId}`] });
+      }
     },
   });
 

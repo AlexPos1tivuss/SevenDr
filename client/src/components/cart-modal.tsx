@@ -35,6 +35,7 @@ export function CartModal({ isOpen, onClose, onOrderPlaced }: CartModalProps) {
       await apiRequest("POST", "/api/orders", orderData);
       clearCart();
       queryClient.invalidateQueries({ queryKey: [`/api/orders/user/${user.id}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/chats/user/${user.id}`] });
       onOrderPlaced("Заказ успешно отправлен!");
       onClose();
     } catch (error) {

@@ -11,6 +11,182 @@ import { apiRequest } from "@/lib/queryClient";
 import { Pencil, Trash2, Plus, Upload, Image } from "lucide-react";
 import { Product } from "@shared/schema";
 
+interface ProductFormState {
+  name: string;
+  description: string;
+  category: string;
+  ageGroup: string;
+  material: string;
+  country: string;
+  price5: string;
+  price20: string;
+  price50: string;
+  imageUrl: string;
+  inStock: boolean;
+}
+
+interface ProductFormProps {
+  isEdit: boolean;
+  productForm: ProductFormState;
+  setProductForm: React.Dispatch<React.SetStateAction<ProductFormState>>;
+  imagePreview: string;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCancel: () => void;
+  onSubmit: () => void;
+  isSubmitting: boolean;
+}
+
+function ProductForm({
+  isEdit,
+  productForm,
+  setProductForm,
+  imagePreview,
+  fileInputRef,
+  handleImageChange,
+  onCancel,
+  onSubmit,
+  isSubmitting,
+}: ProductFormProps) {
+  return (
+    <div className="grid gap-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="name">Название</Label>
+          <Input
+            id="name"
+            value={productForm.name}
+            onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="category">Категория</Label>
+          <Input
+            id="category"
+            value={productForm.category}
+            onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="description">Описание</Label>
+        <Textarea
+          id="description"
+          value={productForm.description}
+          onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
+        />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <Label htmlFor="ageGroup">Возрастная группа</Label>
+          <Input
+            id="ageGroup"
+            value={productForm.ageGroup}
+            onChange={(e) => setProductForm({ ...productForm, ageGroup: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="material">Материал</Label>
+          <Input
+            id="material"
+            value={productForm.material}
+            onChange={(e) => setProductForm({ ...productForm, material: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="country">Страна</Label>
+          <Input
+            id="country"
+            value={productForm.country}
+            onChange={(e) => setProductForm({ ...productForm, country: e.target.value })}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <Label htmlFor="price5">Цена (5+ шт)</Label>
+          <Input
+            id="price5"
+            type="number"
+            step="0.01"
+            value={productForm.price5}
+            onChange={(e) => setProductForm({ ...productForm, price5: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="price20">Цена (20+ шт)</Label>
+          <Input
+            id="price20"
+            type="number"
+            step="0.01"
+            value={productForm.price20}
+            onChange={(e) => setProductForm({ ...productForm, price20: e.target.value })}
+          />
+        </div>
+        <div>
+          <Label htmlFor="price50">Цена (50+ шт)</Label>
+          <Input
+            id="price50"
+            type="number"
+            step="0.01"
+            value={productForm.price50}
+            onChange={(e) => setProductForm({ ...productForm, price50: e.target.value })}
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label>Изображение товара</Label>
+        <div className="mt-1 space-y-3">
+          {imagePreview && (
+            <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+              <img src={imagePreview} alt="Превью" className="w-full h-full object-cover" />
+            </div>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="w-4 h-4 mr-2" />
+            {imagePreview ? "Заменить фото" : "Загрузить фото"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          id="inStock"
+          checked={productForm.inStock}
+          onChange={(e) => setProductForm({ ...productForm, inStock: e.target.checked })}
+        />
+        <Label htmlFor="inStock">В наличии</Label>
+      </div>
+
+      <div className="flex justify-end space-x-2">
+        <Button variant="outline" onClick={onCancel}>
+          Отмена
+        </Button>
+        <Button onClick={onSubmit} disabled={isSubmitting}>
+          {isEdit ? "Сохранить" : "Добавить"}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export function AdminShopPage() {
   const queryClient = useQueryClient();
   const [editProduct, setEditProduct] = useState<Product | null>(null);
@@ -147,156 +323,6 @@ export function AdminShopPage() {
       createMutation.mutate(formData);
     }
   };
-
-  const ProductForm = ({ isEdit }: { isEdit: boolean }) => (
-    <div className="grid gap-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="name">Название</Label>
-          <Input
-            id="name"
-            value={productForm.name}
-            onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="category">Категория</Label>
-          <Input
-            id="category"
-            value={productForm.category}
-            onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
-          />
-        </div>
-      </div>
-      
-      <div>
-        <Label htmlFor="description">Описание</Label>
-        <Textarea
-          id="description"
-          value={productForm.description}
-          onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        <div>
-          <Label htmlFor="ageGroup">Возрастная группа</Label>
-          <Input
-            id="ageGroup"
-            value={productForm.ageGroup}
-            onChange={(e) => setProductForm({ ...productForm, ageGroup: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="material">Материал</Label>
-          <Input
-            id="material"
-            value={productForm.material}
-            onChange={(e) => setProductForm({ ...productForm, material: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="country">Страна</Label>
-          <Input
-            id="country"
-            value={productForm.country}
-            onChange={(e) => setProductForm({ ...productForm, country: e.target.value })}
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        <div>
-          <Label htmlFor="price5">Цена (5+ шт)</Label>
-          <Input
-            id="price5"
-            type="number"
-            step="0.01"
-            value={productForm.price5}
-            onChange={(e) => setProductForm({ ...productForm, price5: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="price20">Цена (20+ шт)</Label>
-          <Input
-            id="price20"
-            type="number"
-            step="0.01"
-            value={productForm.price20}
-            onChange={(e) => setProductForm({ ...productForm, price20: e.target.value })}
-          />
-        </div>
-        <div>
-          <Label htmlFor="price50">Цена (50+ шт)</Label>
-          <Input
-            id="price50"
-            type="number"
-            step="0.01"
-            value={productForm.price50}
-            onChange={(e) => setProductForm({ ...productForm, price50: e.target.value })}
-          />
-        </div>
-      </div>
-
-      <div>
-        <Label>Изображение товара</Label>
-        <div className="mt-1 space-y-3">
-          {imagePreview && (
-            <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
-              <img src={imagePreview} alt="Превью" className="w-full h-full object-cover" />
-            </div>
-          )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            {imagePreview ? "Заменить фото" : "Загрузить фото"}
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="inStock"
-          checked={productForm.inStock}
-          onChange={(e) => setProductForm({ ...productForm, inStock: e.target.checked })}
-        />
-        <Label htmlFor="inStock">В наличии</Label>
-      </div>
-
-      <div className="flex justify-end space-x-2">
-        <Button
-          variant="outline"
-          onClick={() => {
-            if (isEdit) {
-              setIsEditModalOpen(false);
-              setEditProduct(null);
-            } else {
-              setIsCreateModalOpen(false);
-            }
-            resetForm();
-          }}
-        >
-          Отмена
-        </Button>
-        <Button onClick={() => handleSubmit(isEdit)}>
-          {isEdit ? "Сохранить" : "Добавить"}
-        </Button>
-      </div>
-    </div>
-  );
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -312,7 +338,20 @@ export function AdminShopPage() {
             <DialogHeader>
               <DialogTitle>Добавить новый товар</DialogTitle>
             </DialogHeader>
-            <ProductForm isEdit={false} />
+            <ProductForm
+              isEdit={false}
+              productForm={productForm}
+              setProductForm={setProductForm}
+              imagePreview={imagePreview}
+              fileInputRef={fileInputRef}
+              handleImageChange={handleImageChange}
+              onCancel={() => {
+                setIsCreateModalOpen(false);
+                resetForm();
+              }}
+              onSubmit={() => handleSubmit(false)}
+              isSubmitting={createMutation.isPending}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -381,7 +420,21 @@ export function AdminShopPage() {
           <DialogHeader>
             <DialogTitle>Редактировать товар</DialogTitle>
           </DialogHeader>
-          <ProductForm isEdit={true} />
+          <ProductForm
+            isEdit={true}
+            productForm={productForm}
+            setProductForm={setProductForm}
+            imagePreview={imagePreview}
+            fileInputRef={fileInputRef}
+            handleImageChange={handleImageChange}
+            onCancel={() => {
+              setIsEditModalOpen(false);
+              setEditProduct(null);
+              resetForm();
+            }}
+            onSubmit={() => handleSubmit(true)}
+            isSubmitting={updateMutation.isPending}
+          />
         </DialogContent>
       </Dialog>
     </div>
