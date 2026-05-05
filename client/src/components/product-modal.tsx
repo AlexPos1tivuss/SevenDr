@@ -28,8 +28,8 @@ export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductM
   const quantity = parseInt(quantityInput, 10) || 0;
 
   const handleAddToCart = () => {
-    if (quantity < 5) {
-      alert("Минимальное количество для заказа: 5 штук");
+    if (quantity < 1) {
+      alert("Укажите количество товара");
       return;
     }
 
@@ -81,7 +81,7 @@ export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductM
             </div>
           </div>
           <div>
-            <Label htmlFor="quantity">Количество (мин. 5 шт)</Label>
+            <Label htmlFor="quantity">Количество</Label>
             <Input
               id="quantity"
               type="number"
