@@ -85,16 +85,11 @@ export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductM
             <Input
               id="quantity"
               type="number"
-              min="5"
+              min="1"
               value={quantityInput}
               onChange={(e) => {
                 const v = e.target.value.replace(/^0+(?=\d)/, "");
                 setQuantityInput(v);
-              }}
-              onBlur={() => {
-                if (quantityInput === "" || parseInt(quantityInput, 10) < 5) {
-                  setQuantityInput("5");
-                }
               }}
               className="mt-2"
             />
