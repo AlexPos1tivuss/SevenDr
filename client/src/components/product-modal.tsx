@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Product } from "@shared/schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCartContext } from "@/hooks/useCartContext";
 
 interface ProductModalProps {
@@ -14,10 +14,18 @@ interface ProductModalProps {
 }
 
 export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductModalProps) {
-  const [quantity, setQuantity] = useState(5);
+  const [quantityInput, setQuantityInput] = useState("5");
   const { addToCart } = useCartContext();
 
+  useEffect(() => {
+    if (isOpen) {
+      setQuantityInput("5");
+    }
+  }, [isOpen, product?.id]);
+
   if (!product) return null;
+
+  const quantity = parseInt(quantityInput, 10) || 0;
 
   const handleAddToCart = () => {
     if (quantity < 5) {
@@ -44,7 +52,10 @@ export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductM
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg">
+      <DialogContent
+        className="max-w-lg"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle className="text-xl font-display font-bold">{product.name}</DialogTitle>
         </DialogHeader>
@@ -75,8 +86,16 @@ export function ProductModal({ product, isOpen, onClose, onAddToCart }: ProductM
               id="quantity"
               type="number"
               min="5"
-              value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              value={quantityInput}
+              onChange={(e) => {
+                const v = e.target.value.replace(/^0+(?=\d)/, "");
+                setQuantityInput(v);
+              }}
+              onBlur={() => {
+                if (quantityInput === "" || parseInt(quantityInput, 10) < 5) {
+                  setQuantityInput("5");
+                }
+              }}
               className="mt-2"
             />
           </div>

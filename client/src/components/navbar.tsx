@@ -82,7 +82,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 </Button>
               </div>
             </div>
-          ) : (
+          ) : currentPage !== "auth" ? (
             <div className="flex items-center space-x-4">
               <Button
                 onClick={() => onNavigate("auth")}
@@ -91,7 +91,7 @@ export function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 Войти
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </nav>

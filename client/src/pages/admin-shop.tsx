@@ -6,10 +6,54 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { apiRequest } from "@/lib/queryClient";
 import { Pencil, Trash2, Plus, Upload, Image } from "lucide-react";
 import { Product } from "@shared/schema";
+
+const CATEGORY_OPTIONS = [
+  "Конструкторы",
+  "Куклы",
+  "Машинки",
+  "Пазлы",
+  "Мягкие игрушки",
+  "Настольные игры",
+  "Развивающие игрушки",
+  "Творчество",
+  "Спорт и активный отдых",
+];
+
+const AGE_OPTIONS = [
+  "0-12 месяцев",
+  "0-2 года",
+  "0-3 года",
+  "0-5 лет",
+  "3-5 лет",
+  "6-8 лет",
+  "9-12 лет",
+  "12+ лет",
+];
+
+const MATERIAL_OPTIONS = [
+  "Пластик",
+  "Дерево",
+  "Текстиль",
+  "Металл",
+  "Резина",
+  "Силикон",
+  "Алюминий",
+  "Полипропилен",
+  "Массив березы",
+];
+
+const COUNTRY_OPTIONS = [
+  "Беларусь",
+  "Россия",
+  "Китай",
+  "Германия",
+  "Польша",
+];
 
 interface ProductFormState {
   name: string;
@@ -61,11 +105,19 @@ function ProductForm({
         </div>
         <div>
           <Label htmlFor="category">Категория</Label>
-          <Input
-            id="category"
+          <Select
             value={productForm.category}
-            onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
-          />
+            onValueChange={(value) => setProductForm({ ...productForm, category: value })}
+          >
+            <SelectTrigger id="category">
+              <SelectValue placeholder="Выберите категорию" />
+            </SelectTrigger>
+            <SelectContent>
+              {CATEGORY_OPTIONS.map((opt) => (
+                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -81,27 +133,51 @@ function ProductForm({
       <div className="grid grid-cols-3 gap-4">
         <div>
           <Label htmlFor="ageGroup">Возрастная группа</Label>
-          <Input
-            id="ageGroup"
+          <Select
             value={productForm.ageGroup}
-            onChange={(e) => setProductForm({ ...productForm, ageGroup: e.target.value })}
-          />
+            onValueChange={(value) => setProductForm({ ...productForm, ageGroup: value })}
+          >
+            <SelectTrigger id="ageGroup">
+              <SelectValue placeholder="Выберите возраст" />
+            </SelectTrigger>
+            <SelectContent>
+              {AGE_OPTIONS.map((opt) => (
+                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div>
           <Label htmlFor="material">Материал</Label>
-          <Input
-            id="material"
+          <Select
             value={productForm.material}
-            onChange={(e) => setProductForm({ ...productForm, material: e.target.value })}
-          />
+            onValueChange={(value) => setProductForm({ ...productForm, material: value })}
+          >
+            <SelectTrigger id="material">
+              <SelectValue placeholder="Выберите материал" />
+            </SelectTrigger>
+            <SelectContent>
+              {MATERIAL_OPTIONS.map((opt) => (
+                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div>
           <Label htmlFor="country">Страна</Label>
-          <Input
-            id="country"
+          <Select
             value={productForm.country}
-            onChange={(e) => setProductForm({ ...productForm, country: e.target.value })}
-          />
+            onValueChange={(value) => setProductForm({ ...productForm, country: value })}
+          >
+            <SelectTrigger id="country">
+              <SelectValue placeholder="Выберите страну" />
+            </SelectTrigger>
+            <SelectContent>
+              {COUNTRY_OPTIONS.map((opt) => (
+                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
