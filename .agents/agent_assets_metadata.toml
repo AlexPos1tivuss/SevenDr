@@ -12,3 +12,9 @@ id = "tjEkgYUfIJEOOxfUVb0sT"
 uri = "file://attached_assets/diplom_v2_оформление_и_текст.docx"
 type = "word_document"
 title = "Диплом v2 — переписанные абзацы + цитирования"
+
+[[outputs]]
+id = "rNIpMsGXQLXOwau1XGeLR"
+uri = "file://attached_assets/diplom_v3_максимум.docx"
+type = "word_document"
+title = "Диплом v3 — максимум правок (переписывание + цитирования + цитаты)"
