@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "STmHmzuR3XDNAUiIrWM71"
+uri = "file://attached_assets/diplom_оформление_исправлено.docx"
+type = "word_document"
+title = "Диплом — оформление исправлено по памятке"
