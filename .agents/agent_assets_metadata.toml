@@ -24,3 +24,9 @@ id = "DPJoMc6a2gxj_vBORqchU"
 uri = "file://attached_assets/diplom_v4_без_ИИ.docx"
 type = "word_document"
 title = "Диплом v4 — без ИИ-сигнала (формат сохранён)"
+
+[[outputs]]
+id = "UxIVCSEma29PIa_Z4yFFf"
+uri = "file://attached_assets/diplom_v7_цитирования_10проц.docx"
+type = "word_document"
+title = "Диплом v7 — цитирования 11%+ (ГОСТы и закон РБ)"
