@@ -18,3 +18,9 @@ id = "rNIpMsGXQLXOwau1XGeLR"
 uri = "file://attached_assets/diplom_v3_максимум.docx"
 type = "word_document"
 title = "Диплом v3 — максимум правок (переписывание + цитирования + цитаты)"
+
+[[outputs]]
+id = "DPJoMc6a2gxj_vBORqchU"
+uri = "file://attached_assets/diplom_v4_без_ИИ.docx"
+type = "word_document"
+title = "Диплом v4 — без ИИ-сигнала (формат сохранён)"
