@@ -30,3 +30,15 @@ id = "UxIVCSEma29PIa_Z4yFFf"
 uri = "file://attached_assets/diplom_v7_цитирования_10проц.docx"
 type = "word_document"
 title = "Диплом v7 — цитирования 11%+ (ГОСТы и закон РБ)"
+
+[[outputs]]
+id = "AhmRj4S8Q1_v9oiWf6JRz"
+uri = "file://attached_assets/er_simplified_preview.png"
+type = "image"
+title = "Рисунок 2.6 — упрощённая ER-диаграмма (превью)"
+
+[[outputs]]
+id = "HrL6aGbEUgCeehNe1-Xzu"
+uri = "file://attached_assets/diplom_v9_финал.docx"
+type = "word_document"
+title = "Диплом v9 — финал (зарплата + заключение + упрощённый рис.2.6)"
