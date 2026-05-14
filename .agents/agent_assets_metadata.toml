@@ -72,3 +72,9 @@ id = "ZBxAYpvs-E7EC_sfy1FFh"
 uri = "file://attached_assets/preview_рис_2.7.png"
 type = "image"
 title = "Рис. 2.7 — Диаграмма развёртывания (превью)"
+
+[[outputs]]
+id = "K8bWHCuZdJ-OQx6esPXtz"
+uri = "file://attached_assets/diplom_v11_меньше_ИИ.docx"
+type = "word_document"
+title = "Диплом v11 — переписаны 27 ИИ-фрагментов"
