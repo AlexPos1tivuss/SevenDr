@@ -42,3 +42,33 @@ id = "HrL6aGbEUgCeehNe1-Xzu"
 uri = "file://attached_assets/diplom_v9_финал.docx"
 type = "word_document"
 title = "Диплом v9 — финал (зарплата + заключение + упрощённый рис.2.6)"
+
+[[outputs]]
+id = "qCMxM1gD9T19gQh15MwgE"
+uri = "file://attached_assets/diplom_v10_диаграммы.docx"
+type = "word_document"
+title = "Диплом v10 — переделаны рис. 1.1, 2.1, 2.5, 2.7"
+
+[[outputs]]
+id = "elSqkqTMu5FOZCNUyYGDU"
+uri = "file://attached_assets/preview_рис_1.1.png"
+type = "image"
+title = "Рис. 1.1 — Структура организации (превью)"
+
+[[outputs]]
+id = "_zkdMcEQMS2TpCecoq0Gs"
+uri = "file://attached_assets/preview_рис_2.1.png"
+type = "image"
+title = "Рис. 2.1 — Use Case (превью)"
+
+[[outputs]]
+id = "5wxF4GbN9RnjwzYJAvSQG"
+uri = "file://attached_assets/preview_рис_2.5.png"
+type = "image"
+title = "Рис. 2.5 — REST API Endpoints (превью)"
+
+[[outputs]]
+id = "ZBxAYpvs-E7EC_sfy1FFh"
+uri = "file://attached_assets/preview_рис_2.7.png"
+type = "image"
+title = "Рис. 2.7 — Диаграмма развёртывания (превью)"
