@@ -213,7 +213,7 @@ export function AuthPage({ onNavigate }: AuthPageProps) {
           <div className="md:w-1/2 bg-gradient-to-br from-secondary to-primary p-8 flex items-center justify-center">
             <div className="text-white text-center">
               <img
-                src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600"
+                src="/IMG_0272_1781460887943.JPG"
                 alt="Детские игрушки"
                 className="rounded-xl shadow-lg mb-6 animate-float"
               />
